@@ -504,46 +504,17 @@ class MarkdownViewer {
     this.renderChatMessages();
   }
 
-  // Format assistant message content for readability
-  formatChatMessage(content) {
-    if (!content) return '';
-    
-    // Escape HTML first for security
-    const div = document.createElement('div');
-    div.textContent = content;
-    let formatted = div.innerHTML;
-    
-    // Convert bullet points (• or - at start of line) to styled list items
-    formatted = formatted.replace(/^[•\-]\s+(.+)$/gm, '<div class="chat-bullet">• $1</div>');
-    
-    // Bold text (**text**)
-    formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    
-    // Convert double line breaks to paragraphs
-    const paragraphs = formatted.split('\n\n').filter(p => p.trim());
-    formatted = paragraphs.map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
-    
-    return formatted;
-  }
-
   // Render all chat messages
   renderChatMessages() {
     const chatMessages = document.getElementById('chatMessages');
     if (!chatMessages) return;
     
-    chatMessages.innerHTML = this.chatMessages.map(msg => {
-      // Format assistant messages for readability, escape user messages
-      const content = msg.role === 'assistant' 
-        ? this.formatChatMessage(msg.content)
-        : this.escapeHtml(msg.content);
-      
-      return `
-        <div class="chat-message ${msg.role}">
-          <div class="chat-message-bubble">${content}</div>
-          <div class="chat-message-time">${msg.timestamp}</div>
-        </div>
-      `;
-    }).join('');
+    chatMessages.innerHTML = this.chatMessages.map(msg => `
+      <div class="chat-message ${msg.role}">
+        <div class="chat-message-bubble">${this.escapeHtml(msg.content)}</div>
+        <div class="chat-message-time">${msg.timestamp}</div>
+      </div>
+    `).join('');
     
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
@@ -588,152 +559,192 @@ class MarkdownViewer {
     this.currentDocId = null;
   }
 
-  // Generate PDF - Use browser's native print functionality
-  generatePDF() {
+  // Generate PDF from current content
+  async generatePDF() {
     if (!this.currentContent) {
       console.error('No content to generate PDF');
       return;
     }
 
-    this.generatePDFFromContent(this.currentContent, this.currentTitle);
+    await this.generatePDFFromContent(this.currentContent, this.currentTitle);
   }
 
-  // Generate PDF from content (used by both viewer and library download)
-  generatePDFFromContent(content, title) {
-    // Create print window
-    const printWindow = window.open('', '_blank');
-    if (!printWindow) {
-      alert('Pop-up blocked. Please allow pop-ups and try again.');
+  // Generate PDF from content - FIXED VERSION
+  async generatePDFFromContent(content, title) {
+    if (!window.html2pdf) {
+      console.error('html2pdf library not loaded');
       return;
     }
 
-    const htmlContent = marked.parse(content);
+    try {
+      // Convert markdown to plain HTML (no TOC divs)
+      const htmlContent = marked.parse(content);
+      
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = htmlContent;
+      
+      // Apply aggressive spacing fixes
+      this.applyInlineStylesForPDF(tempDiv);
+      
+      document.body.appendChild(tempDiv);
+      
+      const filename = `${title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+      
+      // Reduced scale and simpler options for reliability
+      const pdfOptions = {
+        margin: 0.5,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: { 
+          scale: 1.5,  // Reduced from 2
+          letterRendering: true,
+          useCORS: true
+        },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      
+      await html2pdf().set(pdfOptions).from(tempDiv).save();
+      
+      document.body.removeChild(tempDiv);
+      
+    } catch (error) {
+      console.error('PDF generation failed:', error);
+      alert('PDF generation failed. Please try again.');
+    }
+  }
+
+  // Apply inline styles for PDF generation - FIXED WITH SPACING
+  applyInlineStylesForPDF(container) {
+    // Container with explicit spacing
+    container.style.cssText = `
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      color: #1f2d3d;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px 40px;
+      word-spacing: normal;
+      letter-spacing: normal;
+      white-space: normal;
+    `;
     
-    printWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>${title}</title>
-        <style>
-          @media print {
-            @page {
-              margin: 0.5in;
-              size: letter portrait;
-            }
-            body {
-              margin: 0;
-              padding: 0;
-            }
-          }
-          
-          body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            line-height: 1.6;
-            color: #1f2d3d;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 30px;
-          }
-          
-          h1 {
-            font-size: 28px;
-            color: #336F51;
-            border-bottom: 3px solid #336F51;
-            padding-bottom: 12px;
-            margin: 30px 0 20px 0;
-            font-weight: 700;
-            page-break-after: avoid;
-          }
-          
-          h2 {
-            font-size: 22px;
-            color: #1f2d3d;
-            margin: 25px 0 15px 0;
-            font-weight: 600;
-            border-left: 4px solid #336F51;
-            padding-left: 12px;
-            page-break-after: avoid;
-          }
-          
-          h3 {
-            font-size: 18px;
-            color: #1f2d3d;
-            margin: 20px 0 12px 0;
-            font-weight: 600;
-            page-break-after: avoid;
-          }
-          
-          p {
-            margin-bottom: 16px;
-            orphans: 3;
-            widows: 3;
-          }
-          
-          strong {
-            color: #336F51;
-            font-weight: 600;
-          }
-          
-          ul, ol {
-            margin: 16px 0;
-            padding-left: 24px;
-          }
-          
-          li {
-            margin-bottom: 8px;
-          }
-          
-          table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 14px;
-            page-break-inside: avoid;
-          }
-          
-          th {
-            background-color: #f8f9fb;
-            border: 1px solid #e0e5ea;
-            padding: 12px 8px;
-            text-align: left;
-            font-weight: 600;
-          }
-          
-          td {
-            border: 1px solid #e0e5ea;
-            padding: 10px 8px;
-          }
-          
-          tr:nth-child(even) {
-            background-color: #fafbfc;
-          }
-          
-          /* Prevent awkward breaks */
-          h1, h2, h3, h4, h5, h6 {
-            page-break-after: avoid;
-          }
-          
-          table, figure {
-            page-break-inside: avoid;
-          }
-        </style>
-      </head>
-      <body>
-        ${htmlContent}
-      </body>
-      </html>
-    `);
+    // H1
+    container.querySelectorAll('h1').forEach(h1 => {
+      h1.style.cssText = `
+        font-size: 28px;
+        color: #336F51;
+        border-bottom: 3px solid #336F51;
+        padding-bottom: 12px;
+        margin: 30px 0 20px 0;
+        font-weight: 700;
+        word-spacing: normal;
+        letter-spacing: normal;
+      `;
+    });
     
-    printWindow.document.close();
+    // H2
+    container.querySelectorAll('h2').forEach(h2 => {
+      h2.style.cssText = `
+        font-size: 22px;
+        color: #1f2d3d;
+        margin: 25px 0 15px 0;
+        font-weight: 600;
+        border-left: 4px solid #336F51;
+        padding-left: 12px;
+        word-spacing: normal;
+        letter-spacing: normal;
+      `;
+    });
+
+    // H3
+    container.querySelectorAll('h3').forEach(h3 => {
+      h3.style.cssText = `
+        font-size: 18px;
+        color: #1f2d3d;
+        margin: 20px 0 12px 0;
+        font-weight: 600;
+        word-spacing: normal;
+        letter-spacing: normal;
+      `;
+    });
     
-    // Wait for content to load, then trigger print dialog
-    printWindow.onload = function() {
-      setTimeout(() => {
-        printWindow.print();
-        // Close window after printing (user may cancel, so delay)
-        setTimeout(() => printWindow.close(), 100);
-      }, 250);
-    };
+    // Paragraphs
+    container.querySelectorAll('p').forEach(p => {
+      p.style.cssText = `
+        margin-bottom: 16px;
+        text-align: justify;
+        word-spacing: normal;
+        letter-spacing: normal;
+        white-space: normal;
+      `;
+    });
+    
+    // Strong
+    container.querySelectorAll('strong').forEach(strong => {
+      strong.style.cssText = `
+        color: #336F51;
+        font-weight: 600;
+        word-spacing: normal;
+        letter-spacing: normal;
+      `;
+    });
+
+    // Lists
+    container.querySelectorAll('ul, ol').forEach(list => {
+      list.style.cssText = `
+        margin: 16px 0;
+        padding-left: 24px;
+        word-spacing: normal;
+        letter-spacing: normal;
+      `;
+    });
+
+    // List items
+    container.querySelectorAll('li').forEach(li => {
+      li.style.cssText = `
+        margin-bottom: 8px;
+        word-spacing: normal;
+        letter-spacing: normal;
+      `;
+    });
+    
+    // Tables
+    container.querySelectorAll('table').forEach(table => {
+      table.style.cssText = `
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+        word-spacing: normal;
+        letter-spacing: normal;
+      `;
+      
+      table.querySelectorAll('th').forEach(th => {
+        th.style.cssText = `
+          background-color: #f8f9fb;
+          border: 1px solid #e0e5ea;
+          padding: 12px 8px;
+          text-align: left;
+          font-weight: 600;
+          word-spacing: normal;
+          letter-spacing: normal;
+        `;
+      });
+      
+      table.querySelectorAll('td').forEach(td => {
+        td.style.cssText = `
+          border: 1px solid #e0e5ea;
+          padding: 10px 8px;
+          text-align: left;
+          word-spacing: normal;
+          letter-spacing: normal;
+        `;
+      });
+
+      table.querySelectorAll('tr:nth-child(even)').forEach(tr => {
+        tr.style.backgroundColor = '#fafbfc';
+      });
+    });
   }
 }
 
