@@ -1,6 +1,20 @@
 /* ===== PORTFOLIO PULSE STYLES ===== */
 /* Integrated into Research Platform Left Panel */
 
+/* Left Panel Header Layout */
+.left .panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Right Panel Header Layout */
+.right .panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 /* View Toggle Buttons */
 .view-toggle {
   display: flex;
@@ -8,20 +22,20 @@
   background: #f3f4f6;
   border-radius: 8px;
   padding: 3px;
-  margin-bottom: 12px;
 }
 
 .view-toggle-btn {
   flex: 1;
-  padding: 8px 12px;
+  padding: 6px 16px;
   background: transparent;
   border: none;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: #6b7280;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .view-toggle-btn:hover {
@@ -68,6 +82,28 @@
   font-weight: 600;
   color: #6b7280;
   margin-left: 4px;
+}
+
+.pulse-generate-btn {
+  padding: 6px 12px;
+  background: #172A3A;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pulse-generate-btn:hover:not(:disabled) {
+  background: #0f1f2d;
+  transform: translateY(-1px);
+}
+
+.pulse-generate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .pulse-section-header {
