@@ -380,3 +380,17 @@
   height: 100%;
   overflow: hidden;
 }
+/* Panel Headers */
+.panel-header {
+  font-family: 'Source Serif Pro', Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #172A3A;
+  margin-right: 16px;
+}
+
+/* Disabled toggle buttons */
+.view-toggle-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
