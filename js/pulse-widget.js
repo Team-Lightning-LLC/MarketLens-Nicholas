@@ -281,17 +281,6 @@ async uploadWatchlistFile(file, name) {
     throw error;
   }
 }
-    // Return object info for UI display
-    return {
-      id: uploadData.id,
-      name: name,
-      created_at: new Date().toISOString()
-    };
-  } catch (error) {
-    console.error('[Pulse] Error uploading watchlist:', error);
-    throw error;
-  }
-}
 
   // Show the watchlist display UI
   showWatchlistDisplay(watchlistDoc) {
