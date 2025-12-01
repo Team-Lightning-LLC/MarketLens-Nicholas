@@ -83,42 +83,63 @@
 
         <!-- Portfolio Pulse View (Hidden by default) -->
         <div id="pulseContainer">
+          <!-- Loading Overlay -->
+          <div class="pulse-loading-overlay" id="pulseLoadingOverlay" style="display: none;">
+            <div class="pulse-loading-content">
+              <div class="pulse-spinner"></div>
+              <p class="pulse-loading-text">Researching current news based on your watchlist...</p>
+              <p class="pulse-loading-subtext">This usually takes about 5 minutes</p>
+            </div>
+          </div>
+
           <!-- Pulse Header -->
           <div class="pulse-header">
             <div class="pulse-title-row">
-  <div>
-    <span class="pulse-title">Portfolio Pulse:</span>
-    <span class="pulse-date" id="pulseDateDisplay">--</span>
-  </div>
-  <div class="watchlist-controls">
-    <div class="watchlist-display" id="watchlistDisplay" style="display: none;">
-      <span class="watchlist-name" id="watchlistName" data-tooltip="">My Watchlist</span>
-      <button class="watchlist-refresh-btn" id="watchlistRefreshBtn" data-tooltip="Regenerate digest with current watchlist">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M23 4v6h-6M1 20v-6h6"/>
-          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-        </svg>
-      </button>
-      <button class="watchlist-change-btn" id="watchlistChangeBtn" data-tooltip="Upload a different watchlist">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="17 8 12 3 7 8"/>
-          <line x1="12" y1="3" x2="12" y2="15"/>
-        </svg>
-      </button>
-    </div>
-    <button class="pulse-upload-btn" id="pulseUploadBtn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="17 8 12 3 7 8"/>
-        <line x1="12" y1="3" x2="12" y2="15"/>
-      </svg>
-      Upload Watchlist
-    </button>
-    <input type="file" id="watchlistFileInput" style="display: none;" />
-  </div>
-</div>
-            <div class="pulse-section-header">Daily Articles </div>
+              <div class="pulse-title-section">
+                <span class="pulse-title">Portfolio Pulse:</span>
+                <div class="pulse-date-nav">
+                  <button class="pulse-nav-btn pulse-nav-prev" id="pulseNavPrev" disabled data-tooltip="View older digest">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                  </button>
+                  <span class="pulse-date" id="pulseDateDisplay">--</span>
+                  <button class="pulse-nav-btn pulse-nav-next" id="pulseNavNext" disabled data-tooltip="View newer digest">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="watchlist-controls">
+                <div class="watchlist-display" id="watchlistDisplay" style="display: none;">
+                  <span class="watchlist-name" id="watchlistName" data-tooltip="">My Watchlist</span>
+                  <button class="watchlist-refresh-btn" id="watchlistRefreshBtn" data-tooltip="Regenerate digest with current watchlist">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M23 4v6h-6M1 20v-6h6"/>
+                      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                    </svg>
+                  </button>
+                  <button class="watchlist-change-btn" id="watchlistChangeBtn" data-tooltip="Upload a different watchlist">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </button>
+                </div>
+                <button class="pulse-upload-btn" id="pulseUploadBtn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                  Upload Watchlist
+                </button>
+                <input type="file" id="watchlistFileInput" style="display: none;" />
+              </div>
+            </div>
+            <div class="pulse-section-header">Daily Articles</div>
           </div>
 
           <!-- Articles Container -->
@@ -334,7 +355,7 @@
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
           <polyline points="7,10 12,15 17,10"/>
           <line x1="12" y1="15" x2="12" y2="3"/>
-        </svg
+        </svg>
       </button>
       <button type="button" class="viewer-btn" id="chatToggle">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -470,6 +491,6 @@
     Screen History
   </button>
     <!-- Bottom right build -->
-<div class="version-badge">Scout Build v3.1.0 "Pulse" - Last Updated: 11.12.2025</div>
+<div class="version-badge">Scout Build v3.2.0 "Pulse" - Last Updated: 12.01.2025</div>
 </body>
 </html>
