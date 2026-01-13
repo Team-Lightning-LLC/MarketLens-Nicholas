@@ -1,0 +1,627 @@
+/* ===== RIGHT PANEL COMPACT STYLES ===== */
+
+/* Both consoles */
+.right .console {
+  padding: 6px 12px 12px 12px;
+}
+
+/* Section spacing */
+.right .console .section {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.right .console .section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 2px;
+  padding-bottom: 2px;
+}
+
+.right .console .section h3 {
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #1f2d3d;
+}
+
+/* Dropdowns */
+.right .custom-select-trigger {
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+/* Textarea - minimal */
+.right .console textarea {
+  padding: 6px 8px;
+  font-size: 11px;
+  resize: none;
+  min-height: 28px;
+}
+
+/* Field groups */
+.right .field-group {
+  margin-bottom: 4px;
+}
+
+/* === MODIFIERS - ULTRA COMPACT === */
+.right .section.ctx-compact {
+  margin-bottom: 0;
+  padding-bottom: 2px;
+}
+
+.right .section.ctx-compact h3 {
+  font-size: 7px;
+  font-weight: 600;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.right .ctx-grid {
+  gap: 0;
+}
+
+.right .ctx-block {
+  margin-bottom: 0;
+  padding: 1px 0;
+}
+
+.right .ctx-label {
+  font-size: 6px;
+  margin-bottom: 0;
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+.right .seg {
+  border-radius: 3px;
+  border: 1px solid #e5e7eb;
+  background: #fafbfc;
+  height: 18px;
+  overflow: hidden;
+}
+
+.right .seg-option {
+  padding: 1px 5px !important;
+  font-size: 7px !important;
+  color: #6c7a89;
+  border: none;
+  border-right: 1px solid #e5e7eb;
+  background: transparent;
+}
+
+.right .seg-option:last-child {
+  border-right: none;
+}
+
+.right .seg-option.is-active {
+  background: #172A3A;
+  color: white;
+}
+
+/* === GENERATE BUTTON === */
+.right .generate-row {
+  margin-top: 8px;
+  padding-top: 8px;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #f0f0f0;
+}
+
+.right .generate-row .btn {
+  padding: 8px 28px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(23, 42, 58, 0.15);
+}
+
+/* === WHITE LABEL SPECIFIC === */
+#whiteLabelForm .document-selector {
+  height: 280px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+#whiteLabelForm .section h3 {
+  font-size: 11px;
+}
+
+/* === LOGO LINK === */
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.logo-link:hover {
+  opacity: 0.85;
+}
+
+/* === UTILITY BAR === */
+.utility-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.utility-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+  color: #cfd8dc;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.utility-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.utility-btn svg {
+  flex-shrink: 0;
+}
+
+.utility-btn span {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.signed-in-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 12px;
+  padding-left: 12px;
+  border-left: 1px solid rgba(255,255,255,0.2);
+  color: #cfd8dc;
+  font-size: 11px;
+}
+
+.signed-in-status strong {
+  color: #fff;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #4ade80;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(74, 222, 128, 0.5);
+}
+
+/* ===== UTILITY MODALS ===== */
+.utility-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.utility-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.utility-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.utility-modal-card {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transform: translateY(20px);
+  transition: transform 0.2s;
+}
+
+.utility-modal.active .utility-modal-card {
+  transform: translateY(0);
+}
+
+.utility-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #f0f2f4;
+  border-radius: 8px;
+  font-size: 20px;
+  color: #6c7a89;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.utility-modal-close:hover {
+  background: #e5e7eb;
+  color: #1f2d3d;
+}
+
+.utility-modal-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.utility-modal-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2d3d;
+  margin-bottom: 6px;
+}
+
+.utility-modal-header p {
+  font-size: 13px;
+  color: #6c7a89;
+}
+
+/* Profile Modal */
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-avatar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.profile-avatar svg {
+  padding: 16px;
+  background: #f0f2f4;
+  border-radius: 50%;
+  color: #172A3A;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6c7a89;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-field input {
+  padding: 10px 12px;
+  border: 1px solid #e0e5ea;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1f2d3d;
+  transition: border-color 0.15s;
+}
+
+.profile-field input:focus {
+  outline: none;
+  border-color: #172A3A;
+}
+
+.profile-section {
+  border-top: 1px solid #e0e5ea;
+  padding-top: 16px;
+}
+
+.profile-section h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1f2d3d;
+  margin-bottom: 12px;
+}
+
+.profile-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.profile-toggle span {
+  font-size: 13px;
+  color: #1f2d3d;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #d1d5db;
+  border-radius: 24px;
+  transition: 0.2s;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: #172A3A;
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+.profile-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.profile-actions .btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.profile-actions .btn.secondary {
+  background: #f0f2f4;
+  border: 1px solid #e0e5ea;
+  color: #1f2d3d;
+}
+
+.profile-actions .btn.secondary:hover {
+  background: #e5e7eb;
+}
+
+.profile-actions .btn.primary {
+  background: #172A3A;
+  border: none;
+  color: #fff;
+}
+
+.profile-actions .btn.primary:hover {
+  background: #1e3a4d;
+}
+
+/* Support Modal */
+.support-card {
+  max-width: 480px;
+}
+
+.help-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.help-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  background: #f8f9fa;
+  border: 1px solid #e0e5ea;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #1f2d3d;
+  transition: all 0.15s;
+}
+
+.help-option:hover {
+  background: #f0f2f4;
+  border-color: #172A3A;
+  transform: translateX(4px);
+}
+
+.help-option-icon {
+  width: 40px;
+  height: 40px;
+  background: #172A3A;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.help-option-icon svg {
+  width: 20px;
+  height: 20px;
+  color: #fff;
+  stroke: #fff;
+}
+
+.help-option-content h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.help-option-content p {
+  font-size: 12px;
+  color: #6c7a89;
+}
+
+.help-option-arrow {
+  margin-left: auto;
+  color: #6c7a89;
+  transition: transform 0.15s, color 0.15s;
+}
+
+.help-option:hover .help-option-arrow {
+  transform: translateX(4px);
+  color: #172A3A;
+}
+
+.help-option-arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.help-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.help-divider::before,
+.help-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e0e5ea;
+}
+
+.help-divider span {
+  font-size: 12px;
+  color: #a0a8b0;
+}
+
+.contact-info {
+  text-align: center;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.contact-info p {
+  font-size: 12px;
+  color: #6c7a89;
+  margin-bottom: 8px;
+}
+
+.contact-info a {
+  font-size: 14px;
+  color: #172A3A;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+/* Log Off Modal */
+.logoff-card {
+  max-width: 360px;
+  text-align: center;
+}
+
+.logoff-icon {
+  margin-bottom: 16px;
+}
+
+.logoff-icon svg {
+  padding: 16px;
+  background: #fef2f2;
+  border-radius: 50%;
+  color: #dc2626;
+}
+
+.logoff-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.logoff-actions .btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.logoff-actions .btn.secondary {
+  background: #f0f2f4;
+  border: 1px solid #e0e5ea;
+  color: #1f2d3d;
+}
+
+.logoff-actions .btn.secondary:hover {
+  background: #e5e7eb;
+}
+
+.logoff-actions .btn.danger {
+  background: #dc2626;
+  border: none;
+  color: #fff;
+}
+
+.logoff-actions .btn.danger:hover {
+  background: #b91c1c;
+}
+
+/* Char count smaller */
+.right .console div[style*="font-size:11px"] {
+  font-size: 9px !important;
+  margin-top: 2px !important;
+}
